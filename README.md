@@ -27,17 +27,6 @@ No `std::queue` or `std::stack` is used.
 | `undo` | remove the added ticket, put a served ticket back at the front, or put a cancelled ticket back at its old position | pop the last action |
 | `load file`, `save file` | read tickets into the queue, or write the waiting tickets out | |
 
-## Build and Run
-
-From the repository folder:
-
-```
-g++ -std=c++17 -Wall -Wextra src/main.cpp -o helpdesk
-./helpdesk
-```
-
-On Windows, run `helpdesk.exe`.
-
 ## Sample Session
 
 ```
