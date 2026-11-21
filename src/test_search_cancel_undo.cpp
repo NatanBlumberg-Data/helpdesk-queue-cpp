@@ -5,12 +5,14 @@ using namespace std;
 int main() {
     HelpDesk desk;
 
+    // Test 1: empty queue
     cout << "Test 1: empty queue" << endl;
     desk.searchId(1);
     desk.searchName("Person 1");
     desk.cancel(1);
     desk.undo();
 
+    // Test 2: search id and search name
     cout << endl << "Test 2: search id and search name" << endl;
     desk.add("Person 1", "Cat 1", 12);
     desk.add("Person 2", "Cat 2", 35);
@@ -22,6 +24,7 @@ int main() {
     desk.searchName("Person 2");
     desk.searchName("Person 9");
 
+    // Test 3: cancel at the front, middle and rear
     cout << endl << "Test 3: cancel at the front, middle and rear" << endl;
     desk.cancel(1);
     desk.cancel(3);
@@ -29,12 +32,14 @@ int main() {
     desk.cancel(9);
     desk.print();
 
+    // Test 4: undo the three cancels
     cout << endl << "Test 4: undo the three cancels" << endl;
     desk.undo();
     desk.undo();
     desk.undo();
     desk.print();
 
+    // Test 5: three undos in a row
     cout << endl << "Test 5: three undos in a row (add, serve, cancel)" << endl;
     desk.add("Person 6", "Cat 6", 15);
     desk.serve();
