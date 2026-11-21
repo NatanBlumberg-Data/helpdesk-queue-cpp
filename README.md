@@ -13,16 +13,16 @@ A university IT help desk gets requests all day, such as password resets, broken
 | `Ticket` | `src/Ticket.h` | id, student name, category, minutes needed |
 | `TicketQueue` | `src/TicketQueue.h` | linked-list queue of waiting tickets; the front ticket is served next |
 | `ActionStack` | `src/ActionStack.h` | linked-list stack of actions; the top is the last action |
-| `HelpDesk` | `src/HelpDesk.h` | holds one queue and one stack, and records every add, serve and cancel on the stack |
+| `HelpDesk` | `src/HelpDesk.h` | holds the waiting queue, a queue of served tickets and one stack, and records every add, serve and cancel on the stack |
 
 | Command | Queue | Stack |
 |---|---|---|
 | `add` | enqueue the new ticket at the rear | push the add |
-| `serve` | dequeue the front ticket | push the serve with the ticket |
+| `serve` | dequeue the front ticket and add it to the served queue | push the serve with the ticket |
 | `print` | walk from the front to the rear and add up the minutes | |
 | `search id`, `search name` | walk from the front, adding up the minutes in front of the ticket | |
 | `cancel id` | unlink the ticket; the others keep their order | push the cancel with the ticket and its old position |
-| `undo` | remove the added ticket, put a served ticket back at the front, or put a cancelled ticket back at its old position | pop the last action |
+| `undo` | remove the added ticket, move a served ticket from the served queue back to the front, or put a cancelled ticket back at its old position | pop the last action |
 | `load file`, `save file` | read a day of tickets into the empty queue, or write the waiting tickets out | load empties the stack |
 
 ## Build and Run
