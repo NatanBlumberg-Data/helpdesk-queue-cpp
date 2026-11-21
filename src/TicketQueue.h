@@ -113,7 +113,6 @@ public:
     int getServedCount() const {
         return served_count;
     }
-};
 
     void searchId(int id) {
         Node* current = head;
