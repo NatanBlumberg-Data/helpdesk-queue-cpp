@@ -15,7 +15,6 @@ A university IT help desk gets requests all day, such as password resets, broken
 | `ActionStack` | `src/ActionStack.h` | linked-list stack of actions; the top is the last action |
 | `HelpDesk` | `src/HelpDesk.h` | holds one queue and one stack, and records every add, serve and cancel on the stack |
 
-No `std::queue` or `std::stack` is used.
 
 | Command | Queue | Stack |
 |---|---|---|
