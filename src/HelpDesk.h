@@ -2,9 +2,24 @@
 #define HelpDesk_H
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "TicketQueue.h"
 #include "ActionStack.h"
 using namespace std;
+
+bool isNumber(string text) {
+    if (text.size() == 0 || text.size() > 9) {
+        return false;
+    }
+    for (int i = 0; i < (int)text.size(); i++) {
+        if (text[i] < '0' || text[i] > '9') {
+            return false;
+        }
+    }
+    return true;
+}
 
 class HelpDesk {
 private:
@@ -75,11 +90,65 @@ public:
     }
 
     void load(string fileName) {
-        cout << "Cannot load " << fileName << ": load is not written yet (F7)." << endl;
+        if (queue.isEmpty() == false) {
+            cout << "Load only works when the queue is empty." << endl;
+            return;
+        }
+        ifstream file(fileName);
+
+        if (!file.is_open()) {
+            cout << "Error opening file" << endl;
+            return;
+        }
+
+        string line;
+
+        getline(file, line);
+
+        while (getline(file, line)) {
+            stringstream ss(line);
+
+            string idStr;
+            string name;
+            string category;
+            string minutesStr;
+
+            getline(ss, idStr, ',');
+            getline(ss, name, ',');
+            getline(ss, category, ',');
+            getline(ss, minutesStr, ',');
+
+            if (isNumber(idStr) == false || isNumber(minutesStr) == false) {
+                continue;
+            }
+
+            int id = stoi(idStr);
+            int minutes = stoi(minutesStr);
+
+            queue.addCSVTicket(id, name, category, minutes);
+        }
+
+        file.close();
+
+        while (actions.isEmpty() == false) {
+            actions.pop();
+        }
+
+        cout << "Tickets loaded" << endl;
     }
 
     void save(string fileName) {
-        cout << "Cannot save " << fileName << ": save is not written yet (F7)." << endl;
+        ofstream file(fileName);
+        if (!file.is_open()) {
+            cout << "Error saving file!" << endl;
+            return;
+        }
+
+        file << "ID,Student Name,Category,Minutes Needed" << endl;
+        queue.saveToFile(file);
+        file.close();
+
+        cout << "Tickets saved successfully!" << endl;
     }
 };
 
