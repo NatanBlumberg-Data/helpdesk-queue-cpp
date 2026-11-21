@@ -2,15 +2,9 @@
 #define HelpDesk_H
 
 #include <iostream>
-#include <string>
-#include "Ticket.h"
 #include "TicketQueue.h"
 #include "ActionStack.h"
 using namespace std;
-
-#define ADD_ACTION 1
-#define SERVE_ACTION 2
-#define CANCEL_ACTION 3
 
 class HelpDesk {
 private:
@@ -18,10 +12,10 @@ private:
     ActionStack actions;
 
 public:
-    void add(string student_name, string category, int minutes_needed) {
+    void add(string studentName, string category, int minutesNeeded) {
         int id = queue.getNextId();
-        queue.add(student_name, category, minutes_needed);
-        actions.push(ADD_ACTION, Ticket(id, student_name, category, minutes_needed), 0);
+        queue.add(studentName, category, minutesNeeded);
+        actions.push(1, Ticket(id, studentName, category, minutesNeeded), 0);
     }
 
     void serve() {
@@ -31,7 +25,7 @@ public:
         }
         Ticket ticket = queue.getTicketAt(1);
         queue.serve();
-        actions.push(SERVE_ACTION, ticket, 1);
+        actions.push(2, ticket, 1);
     }
 
     void print() {
@@ -42,8 +36,8 @@ public:
         queue.searchId(id);
     }
 
-    void searchName(string student_name) {
-        queue.searchName(student_name);
+    void searchName(string studentName) {
+        queue.searchName(studentName);
     }
 
     void cancel(int id) {
@@ -54,7 +48,7 @@ public:
         }
         Ticket ticket = queue.getTicketAt(position);
         queue.cancel(id);
-        actions.push(CANCEL_ACTION, ticket, position);
+        actions.push(3, ticket, position);
         cout << "Ticket cancelled - ID: " << id << endl;
     }
 
@@ -66,19 +60,26 @@ public:
         Ticket ticket = actions.peekTicket();
         int position = actions.peekPosition();
         int action = actions.pop();
-
-        if (action == ADD_ACTION) {
+        if (action == 1) {
             queue.cancel(ticket.getId());
             queue.setNextId(ticket.getId());
             cout << "Undo add - ID: " << ticket.getId() << " removed" << endl;
-        } else if (action == SERVE_ACTION) {
+        } else if (action == 2) {
             queue.insertAt(1, ticket);
             queue.setServedCount(queue.getServedCount() - 1);
             cout << "Undo serve - ID: " << ticket.getId() << " back at the front" << endl;
-        } else if (action == CANCEL_ACTION) {
+        } else if (action == 3) {
             queue.insertAt(position, ticket);
             cout << "Undo cancel - ID: " << ticket.getId() << " back at position " << position << endl;
         }
+    }
+
+    void load(string fileName) {
+        cout << "Cannot load " << fileName << ": load is not written yet (F7)." << endl;
+    }
+
+    void save(string fileName) {
+        cout << "Cannot save " << fileName << ": save is not written yet (F7)." << endl;
     }
 };
 
