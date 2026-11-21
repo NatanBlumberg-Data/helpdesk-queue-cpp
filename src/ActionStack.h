@@ -1,6 +1,7 @@
 #ifndef ActionStack_H
 #define ActionStack_H
 
+#include <iostream>
 #include "Ticket.h"
 
 class ActionStack {
@@ -77,6 +78,38 @@ public:
             return -1;
         }
         return top->position;
+    }
+
+    void print() {
+        Node* current = top;
+        if (isEmpty()) {
+            cout << "No actions." << endl;
+        }
+        while (current != nullptr) {
+            string name = to_string(current->action);
+            if (current->action == 1) {
+                name = "add";
+            } else if (current->action == 2) {
+                name = "serve";
+            } else if (current->action == 3) {
+                name = "cancel";
+            }
+            cout << "Action: " << name << ", Ticket ID: " << current->ticket.getId() << endl;
+            current = current->next;
+        }
+    }
+
+    int search(int ticketId) {
+        Node* current = top;
+        int position = 1;
+        while (current != nullptr) {
+            if (current->ticket.getId() == ticketId) {
+                return position;
+            }
+            position = position + 1;
+            current = current->next;
+        }
+        return -1;
     }
 };
 
