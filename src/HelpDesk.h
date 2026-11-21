@@ -24,6 +24,7 @@ bool isNumber(string text) {
 class HelpDesk {
 private:
     TicketQueue queue;
+    TicketQueue served;
     ActionStack actions;
 
 public:
@@ -40,6 +41,7 @@ public:
         }
         Ticket ticket = queue.getTicketAt(1);
         queue.serve();
+        served.addCSVTicket(ticket.getId(), ticket.getStudentName(), ticket.getCategory(), ticket.getMinutesNeeded());
         actions.push(2, ticket, 1);
     }
 
@@ -82,6 +84,7 @@ public:
         } else if (action == 2) {
             queue.insertAt(1, ticket);
             queue.setServedCount(queue.getServedCount() - 1);
+            served.cancel(ticket.getId());
             cout << "Undo serve - ID: " << ticket.getId() << " back at the front" << endl;
         } else if (action == 3) {
             queue.insertAt(position, ticket);
