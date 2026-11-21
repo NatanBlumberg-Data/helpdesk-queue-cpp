@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Ticket.h"
+#include <fstream>
 using namespace std;
 
 class TicketQueue {
@@ -107,6 +108,38 @@ public:
         }
         cout << "Total waiting minutes: " << total_minutes << endl;
     }
+
+    void addCSVTicket(int id, string student_name, string category, int minutes_needed) {
+        Ticket ticket(id, student_name, category, minutes_needed);
+        Node* newNode = new Node(ticket);
+
+        if (isEmpty()) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+
+        count++;
+
+        if (id >= next_id) {
+            next_id = id + 1;
+        }
+    }
+
+    void saveToFile(ofstream& file) const {
+        Node* current = head;
+        while (current != nullptr) {
+            file << current->ticket.getId() << ","
+                << current->ticket.getStudentName() << ","
+                << current->ticket.getCategory() << ","
+                << current->ticket.getMinutesNeeded() << endl;
+            current = current->next;
+        }
+    }
+
     int getNextId() const {
         return next_id;
     }
