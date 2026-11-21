@@ -67,6 +67,8 @@ int main() {
     check("isEmpty", emptyStack.isEmpty());
     check("pop returns -1", emptyStack.pop() == -1);
     check("peekPosition returns -1", emptyStack.peekPosition() == -1);
+    check("search finds nothing", emptyStack.search(1) == -1);
+    emptyStack.print();
 
     // Test 5: stack with one action
     cout << endl << "Test 5: stack with one action" << endl;
@@ -75,6 +77,9 @@ int main() {
     check("not empty", oneStack.isEmpty() == false);
     check("peekTicket gives ticket 1", oneStack.peekTicket().getId() == 1);
     check("peekPosition gives 1", oneStack.peekPosition() == 1);
+    check("search finds ticket 1 at the top", oneStack.search(1) == 1);
+    check("search finds nothing for ticket 2", oneStack.search(2) == -1);
+    oneStack.print();
     check("pop gives action 1", oneStack.pop() == 1);
     check("empty after pop", oneStack.isEmpty());
 
@@ -82,13 +87,16 @@ int main() {
     cout << endl << "Test 6: full stack (1000 actions)" << endl;
     ActionStack fullStack;
     for (int i = 1; i <= 1000; i++) {
-        fullStack.push(i);
+        fullStack.push(1, Ticket(i, "Student " + to_string(i), "Wi-Fi", 5), i);
     }
+    check("search finds ticket 1000 at the top", fullStack.search(1000) == 1);
+    check("search finds ticket 1 at the bottom", fullStack.search(1) == 1000);
     bool reversed = true;
     for (int i = 1000; i >= 1; i--) {
-        if (fullStack.pop() != i) {
+        if (fullStack.peekTicket().getId() != i) {
             reversed = false;
         }
+        fullStack.pop();
     }
     check("1000 pops come back in reverse order", reversed);
     check("empty after 1000 pops", fullStack.isEmpty());
