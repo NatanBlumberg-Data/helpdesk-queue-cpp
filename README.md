@@ -26,6 +26,15 @@ A university IT help desk gets requests all day, such as password resets, broken
 | `undo` | remove the added ticket, put a served ticket back at the front, or put a cancelled ticket back at its old position | pop the last action |
 | `load file`, `save file` | read tickets into the queue, or write the waiting tickets out | |
 
+## Build and Run
+
+From the repository folder:
+
+```
+g++ -std=c++17 -Wall -Wextra src/main.cpp -o helpdesk
+./helpdesk
+```
+
 ## Sample Session
 
 ```
