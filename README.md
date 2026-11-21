@@ -15,7 +15,6 @@ A university IT help desk gets requests all day, such as password resets, broken
 | `ActionStack` | `src/ActionStack.h` | linked-list stack of actions; the top is the last action |
 | `HelpDesk` | `src/HelpDesk.h` | holds one queue and one stack, and records every add, serve and cancel on the stack |
 
-
 | Command | Queue | Stack |
 |---|---|---|
 | `add` | enqueue the new ticket at the rear | push the add |
@@ -24,7 +23,7 @@ A university IT help desk gets requests all day, such as password resets, broken
 | `search id`, `search name` | walk from the front, adding up the minutes in front of the ticket | |
 | `cancel id` | unlink the ticket; the others keep their order | push the cancel with the ticket and its old position |
 | `undo` | remove the added ticket, put a served ticket back at the front, or put a cancelled ticket back at its old position | pop the last action |
-| `load file`, `save file` | read tickets into the queue, or write the waiting tickets out | |
+| `load file`, `save file` | read a day of tickets into the empty queue, or write the waiting tickets out | load empties the stack |
 
 ## Build and Run
 
@@ -121,24 +120,40 @@ Category: Printer
 Minutes Needed: 10
 
 Total waiting minutes: 30
-> simulate data/sample_day.csv
-Tickets: 20
+> save data/closing.csv
+Tickets saved successfully!
+> serve
+Serving ticket: 1
+> serve
+Serving ticket: 2
+> serve
+Serving ticket: 3
+> load data/help-desk.csv
+Tickets loaded
+> search name Person 5
+Ticket ID: 5
+Student: Person 5
+Position: 5
+Estimated wait: 80 minutes
+
+> simulate data/help-desk.csv
+Tickets: 21
 
 Agents: 1
-Average wait: 126.75 minutes
-Longest wait: 255 minutes
+Average wait: 209.905 minutes
+Longest wait: 460 minutes
 
 Agents: 2
-Average wait: 59 minutes
-Longest wait: 125 minutes
+Average wait: 98.619 minutes
+Longest wait: 229 minutes
 > quit
 ```
 
 ## Waiting-Time Results (M4)
 
-`simulate data/sample_day.csv` serves the 20 tickets of the sample day, 270 minutes of work in total. All tickets are in line when the desk opens and are served in file order, each by the agent who is free first. A ticket's wait is the time until an agent starts on it.
+`simulate data/help-desk.csv` serves the 21 tickets of the sample day, 472 minutes of work in total. All tickets are in line when the desk opens and are served in file order, each by the agent who is free first. A ticket's wait is the time until an agent starts on it.
 
 | Agents | Average wait | Longest wait |
 |---|---|---|
-| 1 | 126.75 min | 255 min |
-| 2 | 59 min | 125 min |
+| 1 | 209.905 min | 460 min |
+| 2 | 98.619 min | 229 min |
