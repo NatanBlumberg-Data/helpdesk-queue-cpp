@@ -118,7 +118,6 @@ public:
         Node* current = head;
         int position = 1;
         int wait = 0;
-
         while (current != nullptr) {
             if (current->ticket.getId() == id) {
                 cout << "Ticket ID: " << id << endl;
@@ -134,16 +133,15 @@ public:
         cout << "Ticket ID " << id << " not found." << endl;
     }
 
-    void searchName(string student_name) {
+    void searchName(string studentName) {
         Node* current = head;
         int position = 1;
         int wait = 0;
         bool found = false;
-
         while (current != nullptr) {
-            if (current->ticket.getStudentName() == student_name) {
+            if (current->ticket.getStudentName() == studentName) {
                 cout << "Ticket ID: " << current->ticket.getId() << endl;
-                cout << "Student: " << student_name << endl;
+                cout << "Student: " << studentName << endl;
                 cout << "Position: " << position << endl;
                 cout << "Estimated wait: " << wait << " minutes" << endl;
                 cout << endl;
@@ -154,14 +152,13 @@ public:
             current = current->next;
         }
         if (found == false) {
-            cout << "No tickets found for " << student_name << "." << endl;
+            cout << "No tickets found for " << studentName << "." << endl;
         }
     }
 
     int findPosition(int id) {
         Node* current = head;
         int position = 1;
-
         while (current != nullptr) {
             if (current->ticket.getId() == id) {
                 return position;
@@ -175,7 +172,6 @@ public:
     Ticket getTicketAt(int position) {
         Node* current = head;
         int i = 1;
-
         while (current != nullptr) {
             if (i == position) {
                 return current->ticket;
@@ -189,7 +185,6 @@ public:
     bool cancel(int id) {
         Node* prev = nullptr;
         Node* current = head;
-
         while (current != nullptr && current->ticket.getId() != id) {
             prev = current;
             current = current->next;
@@ -197,7 +192,6 @@ public:
         if (current == nullptr) {
             return false;
         }
-
         if (prev == nullptr) {
             head = current->next;
         } else {
@@ -206,7 +200,6 @@ public:
         if (current == tail) {
             tail = prev;
         }
-
         delete current;
         count = count - 1;
         return true;
@@ -214,7 +207,6 @@ public:
 
     void insertAt(int position, Ticket ticket) {
         Node* newNode = new Node(ticket);
-
         if (position <= 1 || isEmpty()) {
             newNode->next = head;
             head = newNode;
@@ -237,12 +229,12 @@ public:
         count = count + 1;
     }
 
-    void setNextId(int next_id) {
-        this->next_id = next_id;
+    void setNextId(int id) {
+        next_id = id;
     }
 
-    void setServedCount(int served_count) {
-        this->served_count = served_count;
+    void setServedCount(int served) {
+        served_count = served;
     }
 };
 
