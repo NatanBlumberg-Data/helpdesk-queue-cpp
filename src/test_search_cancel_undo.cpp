@@ -1,6 +1,5 @@
 #include <iostream>
 #include "HelpDesk.h"
-
 using namespace std;
 
 int main() {
@@ -12,7 +11,7 @@ int main() {
     desk.cancel(1);
     desk.undo();
 
-    cout << "\nTest 2: search id and search name" << endl;
+    cout << endl << "Test 2: search id and search name" << endl;
     desk.add("Person 1", "Cat 1", 12);
     desk.add("Person 2", "Cat 2", 35);
     desk.add("Person 3", "Cat 3", 45);
@@ -23,20 +22,20 @@ int main() {
     desk.searchName("Person 2");
     desk.searchName("Person 9");
 
-    cout << "\nTest 3: cancel at the front, middle and rear" << endl;
+    cout << endl << "Test 3: cancel at the front, middle and rear" << endl;
     desk.cancel(1);
     desk.cancel(3);
     desk.cancel(5);
     desk.cancel(9);
     desk.print();
 
-    cout << "\nTest 4: undo the three cancels" << endl;
+    cout << endl << "Test 4: undo the three cancels" << endl;
     desk.undo();
     desk.undo();
     desk.undo();
     desk.print();
 
-    cout << "\nTest 5: three undos in a row (add, serve, cancel)" << endl;
+    cout << endl << "Test 5: three undos in a row (add, serve, cancel)" << endl;
     desk.add("Person 6", "Cat 6", 15);
     desk.serve();
     desk.cancel(3);
