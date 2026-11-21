@@ -115,4 +115,136 @@ public:
     }
 };
 
+    void searchId(int id) {
+        Node* current = head;
+        int position = 1;
+        int wait = 0;
+
+        while (current != nullptr) {
+            if (current->ticket.getId() == id) {
+                cout << "Ticket ID: " << id << endl;
+                cout << "Student: " << current->ticket.getStudentName() << endl;
+                cout << "Position: " << position << endl;
+                cout << "Estimated wait: " << wait << " minutes" << endl;
+                return;
+            }
+            wait = wait + current->ticket.getMinutesNeeded();
+            position = position + 1;
+            current = current->next;
+        }
+        cout << "Ticket ID " << id << " not found." << endl;
+    }
+
+    void searchName(string student_name) {
+        Node* current = head;
+        int position = 1;
+        int wait = 0;
+        bool found = false;
+
+        while (current != nullptr) {
+            if (current->ticket.getStudentName() == student_name) {
+                cout << "Ticket ID: " << current->ticket.getId() << endl;
+                cout << "Student: " << student_name << endl;
+                cout << "Position: " << position << endl;
+                cout << "Estimated wait: " << wait << " minutes" << endl;
+                cout << endl;
+                found = true;
+            }
+            wait = wait + current->ticket.getMinutesNeeded();
+            position = position + 1;
+            current = current->next;
+        }
+        if (found == false) {
+            cout << "No tickets found for " << student_name << "." << endl;
+        }
+    }
+
+    int findPosition(int id) {
+        Node* current = head;
+        int position = 1;
+
+        while (current != nullptr) {
+            if (current->ticket.getId() == id) {
+                return position;
+            }
+            position = position + 1;
+            current = current->next;
+        }
+        return -1;
+    }
+
+    Ticket getTicketAt(int position) {
+        Node* current = head;
+        int i = 1;
+
+        while (current != nullptr) {
+            if (i == position) {
+                return current->ticket;
+            }
+            i = i + 1;
+            current = current->next;
+        }
+        return Ticket(0, "", "", 0);
+    }
+
+    bool cancel(int id) {
+        Node* prev = nullptr;
+        Node* current = head;
+
+        while (current != nullptr && current->ticket.getId() != id) {
+            prev = current;
+            current = current->next;
+        }
+        if (current == nullptr) {
+            return false;
+        }
+
+        if (prev == nullptr) {
+            head = current->next;
+        } else {
+            prev->next = current->next;
+        }
+        if (current == tail) {
+            tail = prev;
+        }
+
+        delete current;
+        count = count - 1;
+        return true;
+    }
+
+    void insertAt(int position, Ticket ticket) {
+        Node* newNode = new Node(ticket);
+
+        if (position <= 1 || isEmpty()) {
+            newNode->next = head;
+            head = newNode;
+            if (tail == nullptr) {
+                tail = newNode;
+            }
+        } else {
+            Node* prev = head;
+            int i = 1;
+            while (i < position - 1 && prev->next != nullptr) {
+                prev = prev->next;
+                i = i + 1;
+            }
+            newNode->next = prev->next;
+            prev->next = newNode;
+            if (newNode->next == nullptr) {
+                tail = newNode;
+            }
+        }
+        count = count + 1;
+    }
+
+    void setNextId(int next_id) {
+        this->next_id = next_id;
+    }
+
+    void setServedCount(int served_count) {
+        this->served_count = served_count;
+    }
+};
+
 #endif
