@@ -1,7 +1,7 @@
 #ifndef ActionStack_H
 #define ActionStack_H
 
-#include "Ticket.h" 
+#include "Ticket.h"
 
 class ActionStack {
 private:
@@ -16,8 +16,7 @@ private:
             next = nullptr;
         }
 
-        Node(int action, Ticket ticket, int position) : 
-ticket(ticket) {
+        Node(int action, Ticket ticket, int position) : ticket(ticket) {
             this->action = action;
             this->position = position;
             next = nullptr;
