@@ -5,18 +5,6 @@
 #include "HelpDesk.h"
 using namespace std;
 
-bool isNumber(string text) {
-    if (text.size() == 0 || text.size() > 9) {
-        return false;
-    }
-    for (int i = 0; i < (int)text.size(); i++) {
-        if (text[i] < '0' || text[i] > '9') {
-            return false;
-        }
-    }
-    return true;
-}
-
 int findSpace(string text) {
     for (int i = 0; i < (int)text.size(); i++) {
         if (text[i] == ' ') {
@@ -92,7 +80,7 @@ void simulateDay(string fileName) {
     string line;
     getline(file, line);
     while (getline(file, line)) {
-        string minutesText = getField(line, 2);
+        string minutesText = getField(line, 3);
         if (isNumber(minutesText)) {
             minutes.push_back(stoi(minutesText));
         } else if (line != "") {
